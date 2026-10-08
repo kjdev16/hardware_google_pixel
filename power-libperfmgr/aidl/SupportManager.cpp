@@ -219,8 +219,6 @@ bool SupportManager::sessionModeSupported(SessionMode type) {
             return false;
         case SessionMode::GRAPHICS_PIPELINE:
             return false;
-        case SessionMode::AUDIO_PERFORMANCE:
-            return false;
         default:
             return true;
     }
