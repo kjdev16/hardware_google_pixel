@@ -1166,13 +1166,11 @@ bool ThermalHelperImpl::fillTemperatureThresholds(
 bool ThermalHelperImpl::fillCurrentCoolingDevices(
         bool filterType, CoolingType type, std::vector<CoolingDevice> *cooling_devices) const {
     std::vector<CoolingDevice> ret;
-    bool has_matching_device = false;
     for (const auto &name_info_pair : cooling_device_info_map_) {
         CoolingDevice value;
         if (filterType && name_info_pair.second.type != type) {
             continue;
         }
-        has_matching_device = true;
         if (readCoolingDevice(name_info_pair.first, &value)) {
             ret.emplace_back(std::move(value));
         } else {
@@ -1180,7 +1178,7 @@ bool ThermalHelperImpl::fillCurrentCoolingDevices(
         }
     }
     *cooling_devices = ret;
-    return !has_matching_device || !ret.empty();
+    return ret.size() > 0;
 }
 
 ThrottlingSeverity ThermalHelperImpl::getSeverityReference(std::string_view sensor_name) {
